@@ -13,8 +13,10 @@ using Dominio;
 namespace Presentacion
 {
     public partial class frmCatalogo : Form
+
     {
         private List<Articulo> listaArticulos;
+        private bool permitirTextChanged = false;
         public frmCatalogo()
         {
             InitializeComponent();
