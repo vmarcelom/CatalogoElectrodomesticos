@@ -226,6 +226,7 @@
             this.txbModelo.Name = "txbModelo";
             this.txbModelo.Size = new System.Drawing.Size(142, 23);
             this.txbModelo.TabIndex = 7;
+            this.txbModelo.TextChanged += new System.EventHandler(this.txbModelo_TextChanged);
             // 
             // cbxCriterio
             // 

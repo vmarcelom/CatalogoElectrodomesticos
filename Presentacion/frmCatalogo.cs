@@ -34,7 +34,7 @@ namespace Presentacion
             lblCRSeleccion.Visible = false;
             lblCRCriterio.Visible = false;
 
-            
+           
         }
 
         private void dgvArticulos_SelectionChanged(object sender, EventArgs e)
@@ -211,11 +211,18 @@ namespace Presentacion
 
         private void btnVerDetalle_Click(object sender, EventArgs e)
         {
-            
-            Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
-            frmDetalle detalle = new frmDetalle(seleccionado);
-            detalle.ShowDialog();
-            
+            try
+            {
+               
+                Articulo seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+                frmDetalle detalle = new frmDetalle(seleccionado);
+                detalle.ShowDialog();
+            }
+            catch (Exception  ex)
+            {
+
+                throw ex;
+            }                      
 
         }
 
@@ -236,7 +243,32 @@ namespace Presentacion
             return false;
         }
 
-        
+        private void txbModelo_TextChanged(object sender, EventArgs e)
+        {
+            List<Articulo> listaFiltrada;
+            string modelo = txbModelo.Text;
+
+            if (cbxSeleccion.SelectedIndex > -1 || cbxCriterio.SelectedIndex > -1) // sino se selecciona ningun comboBox, se comportará como un filtro rápido
+            {
+                return;
+            }
+
+            if (modelo != "")
+            {
+                listaFiltrada = listaArticulos.FindAll(x => x.Nombre.ToUpper().Contains(modelo.ToUpper()));
+            }
+            else
+            {
+                listaFiltrada = listaArticulos;
+            }
+
+            dgvArticulos.DataSource = null;
+            dgvArticulos.DataSource = listaFiltrada;
+            ocultarColumna();
+
+            dgvArticulos.Focus();
+
+        }
     }
     
 }
